@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>قائمة طعام أركان المواني | Arkan Al-Mawani Seafood Menu</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Cairo & Amiri -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Tailwind Custom Theme Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0B2545',
+              deep: '#06162a',
+              teal: '#133B5C',
+              wave: '#2B7A9E',
+              sky: '#469ABF',
+              gold: '#F4A211',
+              amber: '#E68A00',
+              goldLight: '#FDE047',
+              sand: '#F8FAFC',
+              surface: '#0d2d52'
+            }
+          },
+          fontFamily: {
+            cairo: ['Cairo', 'sans-serif'],
+            amiri: ['Amiri', 'serif']
+          },
+          keyframes: {
+            waveFlow: {
+              '0%, 100%': { transform: 'translateX(0) translateY(0)' },
+              '50%': { transform: 'translateX(-15px) translateY(-5px)' },
+            },
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(14px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            }
+          },
+          animation: {
+            'wave-flow': 'waveFlow 8s ease-in-out infinite',
+            'fade-in-up': 'fadeInUp 0.4s ease-out forwards'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: radial-gradient(circle at 18% 12%, #0e3158 0%, #081a30 55%, #040e1c 100%);
+      color: #f1f5f9;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Subtle wave dot pattern */
+    .ocean-pattern {
+      background-image: radial-gradient(rgba(43, 122, 158, 0.16) 1.2px, transparent 1.2px);
+      background-size: 26px 26px;
+    }
+
+    /* Glassmorphism Cards */
+    .glass-card {
+      background: rgba(11, 37, 69, 0.68);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(43, 122, 158, 0.28);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(244, 162, 17, 0.55);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.55), 0 0 18px rgba(244, 162, 17, 0.1);
+    }
+
+    .bento-highlight {
+      background: linear-gradient(135deg, rgba(19, 59, 92, 0.9) 0%, rgba(11, 37, 69, 0.95) 100%);
+      border: 1px solid rgba(244, 162, 17, 0.4);
+    }
+
+    /* Active Page Navigation Button */
+    .nav-tab-btn.active {
+      background: linear-gradient(135deg, #F4A211 0%, #E68A00 100%);
+      color: #0B2545;
+      font-weight: 800;
+      box-shadow: 0 0 16px rgba(244, 162, 17, 0.4);
+      border-color: #FDE047;
+    }
+
+    /* Page Visibility Handling */
+    .menu-page-section {
+      display: none;
+    }
+    .menu-page-section.active-page {
+      display: block;
+      animation: fadeInUp 0.4s ease-out forwards;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #081a30;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2b7a9e;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #f4a211;
+    }
+  </style>
+</head>
+<body class="ocean-pattern flex flex-col justify-between selection:bg-brand-gold selection:text-brand-navy">
+
+  <!-- Top Header with Brand Identity -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-brand-deep/90 border-b border-brand-wave/30 shadow-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20 sm:h-24">
+        
+        <!-- Logo & Brand Title (Matching Official Logo Art) -->
+        <div class="flex items-center gap-3 sm:gap-4">
+          <div class="relative w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl bg-gradient-to-br from-brand-teal via-brand-navy to-brand-deep border border-brand-wave/50 p-1.5 shadow-md">
+            <svg viewBox="0 0 120 120" class="w-full h-full" fill="none">
+              <!-- Golden Dot Elements -->
+              <circle cx="48" cy="22" r="7" fill="#F4A211"/>
+              <circle cx="42" cy="74" r="6" fill="#F4A211"/>
+              <!-- Wave 1: Navy Blue -->
+              <path d="M10 38 C35 22, 65 52, 105 28 C95 38, 70 38, 10 52 Z" fill="#0B2545" stroke="#2B7A9E" stroke-width="1.5"/>
+              <!-- Wave 2: Sea Marine Wave -->
+              <path d="M12 48 C42 35, 70 60, 110 38 C90 52, 60 55, 12 62 Z" fill="#2B7A9E"/>
+              <!-- Wave 3: Golden Ribbon -->
+              <path d="M30 62 C55 52, 85 64, 105 72 C80 65, 55 60, 30 62 Z" fill="#F4A211"/>
+              <!-- Wave 4: Deep Base Accent -->
+              <path d="M8 82 C35 70, 70 94, 112 80 C88 92, 50 94, 8 92 Z" fill="#2B7A9E"/>
+            </svg>
+            <div class="absolute -bottom-1 -left-1 w-2.5 h-2.5 bg-brand-gold rounded-full"></div>
+          </div>
+
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                أركان <span class="text-brand-gold">المواني</span>
+              </h1>
+              <span class="hidden md:inline-block px-2.5 py-0.5 text-xs font-bold rounded-full bg-brand-wave/20 text-brand-gold border border-brand-gold/30">
+                قائمة الطعام الرقمية
+              </span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-300 font-medium">
+              ARKAN AL-MAWANI <span class="text-brand-goldLight text-[11px] font-normal">| مطعم مأكولات بحرية</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative w-48 sm:w-72 md:w-80">
+          <input 
+            id="searchInput" 
+            type="text" 
+            placeholder="ابحث في المنيو (سمك، طاجن، شوربة)..." 
+            class="w-full bg-brand-teal/40 text-xs sm:text-sm text-white placeholder-slate-400 rounded-xl px-9 py-2 sm:py-2.5 border border-brand-wave/40 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition duration-200"
+            oninput="handleLiveSearch(this.value)"
+          />
+          <i data-lucide="search" class="w-4 h-4 text-brand-gold absolute right-3 top-2.5 sm:top-3"></i>
+          <button id="clearSearchBtn" onclick="resetSearch()" class="hidden absolute left-3 top-2.5 text-slate-400 hover:text-white">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Top Welcome Hero & Page Tabs Navigation -->
+  <section class="relative bg-gradient-to-b from-brand-deep via-brand-navy to-transparent pt-6 pb-4 border-b border-brand-wave/20">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      
+      <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-brand-wave/20 border border-brand-gold/30 text-brand-gold text-xs sm:text-sm font-semibold mb-2">
+        <i data-lucide="waves" class="w-4 h-4"></i>
+        <span>طازج يومياً من خيرات البحر إلى مائدتكم</span>
+      </div>
+
+      <h2 class="text-xl sm:text-3xl font-extrabold text-white mb-1">قائمة الأصناف والأسعار</h2>
+      <p class="text-slate-300 text-xs sm:text-sm max-w-xl mx-auto">
+        تصفح أشهى الأسماك الطازجة المحضرة باختيارك، الطواجن الفخارية، وجبات التوفير والسندوتشات.
+      </p>
+
+      <!-- 4 Page Tab Navigation Bar -->
+      <div class="mt-6 flex flex-col items-center gap-3">
+        <div class="inline-flex flex-wrap justify-center p-1.5 gap-1.5 sm:gap-2 bg-brand-navy/90 rounded-2xl border border-brand-wave/40 backdrop-blur-md shadow-2xl max-w-full">
+          
+          <button onclick="goToPage(1)" id="tab-1" class="nav-tab-btn active flex items-center gap-2 px-3 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200">
+            <i data-lucide="fish" class="w-4 h-4"></i>
+            <span>١. الأسماك والوجبات والصواني</span>
+          </button>
+
+          <button onclick="goToPage(2)" id="tab-2" class="nav-tab-btn flex items-center gap-2 px-3 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-200 hover:bg-brand-wave/20 transition-all duration-200">
+            <i data-lucide="flame" class="w-4 h-4"></i>
+            <span>٢. الطواجن والمكرونة والأرز</span>
+          </button>
+
+          <button onclick="goToPage(3)" id="tab-3" class="nav-tab-btn flex items-center gap-2 px-3 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-200 hover:bg-brand-wave/20 transition-all duration-200">
+            <i data-lucide="soup" class="w-4 h-4"></i>
+            <span>٣. السندوتشات والشوربات</span>
+          </button>
+
+          <button onclick="goToPage(4)" id="tab-4" class="nav-tab-btn flex items-center gap-2 px-3 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-200 hover:bg-brand-wave/20 transition-all duration-200">
+            <i data-lucide="salad" class="w-4 h-4"></i>
+            <span>٤. السلطات والمشروبات</span>
+          </button>
+
+        </div>
+
+        <!-- Page Indicator & Prev / Next Arrows -->
+        <div class="flex items-center justify-center gap-4 text-xs text-slate-300 font-medium">
+          <button onclick="navigatePage(-1)" class="flex items-center gap-1 hover:text-brand-gold transition px-2 py-1 rounded-lg bg-brand-teal/30 border border-brand-wave/30">
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            <span>الصفحة السابقة</span>
+          </button>
+
+          <span class="px-3 py-0.5 rounded-full bg-brand-deep text-brand-gold font-bold border border-brand-gold/30">
+            صفحة <span id="currentPageIndicator">1</span> من 4
+          </span>
+
+          <button onclick="navigatePage(1)" class="flex items-center gap-1 hover:text-brand-gold transition px-2 py-1 rounded-lg bg-brand-teal/30 border border-brand-wave/30">
+            <span>الصفحة التالية</span>
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Live Search Feedback Container -->
+  <div id="searchFeedbackBox" class="max-w-7xl mx-auto px-4 mt-4 hidden">
+    <div class="p-3 bg-brand-teal/40 border border-brand-gold/40 rounded-xl flex items-center justify-between text-xs text-slate-200">
+      <div class="flex items-center gap-2">
+        <i data-lucide="search" class="w-4 h-4 text-brand-gold"></i>
+        <span>نتائج البحث عن: <strong id="searchQueryLabel" class="text-brand-gold"></strong></span>
+      </div>
+      <button onclick="resetSearch()" class="text-brand-gold hover:underline font-bold">إلغاء البحث وعرض الصفحة الحالية</button>
+    </div>
+  </div>
+
+  <!-- Main Menu Multi-Page Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+
+    <!-- ================= PAGE 1: الأسماك والوجبات والصواني ================= -->
+    <div id="menu-page-1" class="menu-page-section active-page space-y-8">
+      
+      <!-- BENTO GRID SECTION: Cooking Styles + Family Trays Showcase -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+        
+        <!-- Bento Cell 1: Cooking Styles Feature (7 cols) -->
+        <div class="md:col-span-7 glass-card bento-highlight rounded-3xl p-6 sm:p-7 relative overflow-hidden flex flex-col justify-between">
+          <div class="absolute -right-12 -top-12 w-48 h-48 bg-brand-wave/20 rounded-full blur-2xl pointer-events-none"></div>
+          
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-gold bg-brand-gold/15 px-3 py-1 rounded-full border border-brand-gold/30">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                طرق الطهي حسب اختيارك
+              </span>
+              <span class="text-xs text-slate-300">تحضير طازج وفوري</span>
+            </div>
+            
+            <h3 class="text-2xl sm:text-3xl font-black text-white mb-2">اختر طريقة الطبخ لسمكك المفضل</h3>
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+              نجهز أسماكك الطازجة بالوزن بأيدي أمهر الطهاة الساحليين بالخلطات والتتبيلات الخاصة بأركان المواني.
+            </p>
+
+            <!-- Cooking Styles Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+              <div class="p-3 rounded-xl bg-brand-navy/90 border border-brand-wave/30">
+                <span class="text-base mb-1 block">🔥</span>
+                <h4 class="text-xs font-bold text-white">مشوي ع الفحم</h4>
+                <p class="text-[10px] text-slate-400">نكهة حطب الشواء الأصلية</p>
+              </div>
+
+              <div class="p-3 rounded-xl bg-brand-navy/90 border border-brand-wave/30">
+                <span class="text-base mb-1 block">🌾</span>
+                <h4 class="text-xs font-bold text-white">مشوي بالردة</h4>
+                <p class="text-[10px] text-slate-400">الطريقة المصرية التقليدية</p>
+              </div>
+
+              <div class="p-3 rounded-xl bg-brand-navy/90 border border-brand-wave/30">
+                <span class="text-base mb-1 block">🍋</span>
+                <h4 class="text-xs font-bold text-white">زيت وليمون</h4>
+                <p class="text-[10px] text-slate-400">خفيف، صحي ومنعش</p>
+              </div>
+
+              <div class="p-3 rounded-xl bg-brand-navy/90 border border-brand-wave/30">
+                <span class="text-base mb-1 block">🐟</span>
+                <h4 class="text-xs font-bold text-white">سنجاري مقفول / مفتوح</h4>
+                <p class="text-[10px] text-slate-400">بالخلطة البحرية والخضار</p>
+              </div>
+
+              <div class="p-3 rounded-xl bg-brand-navy/90 border border-brand-wave/30">
+                <span class="text-base mb-1 block">🏺</span>
+                <h4 class="text-xs font-bold text-white">فرن إسكندراني</h4>
+                <p class="text-[10px] text-slate-400">بصلصة الثوم والتوابل</p>
+              </div>
+
+              <div class="p-3 rounded-xl bg-brand-navy/90 border border-brand-wave/30">
+                <span class="text-base mb-1 block">🍤</span>
+                <h4 class="text-xs font-bold text-white">مقلي مقرمش</h4>
+                <p class="text-[10px] text-slate-400">قرمشة ذهبية سرية</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-brand-wave/20 flex items-center justify-between text-xs text-brand-goldLight">
+            <span class="flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4 text-brand-gold"></i> تتبيل وتحضير مجاني لجميع الطرق</span>
+            <span class="text-slate-300">يختلف السعر اليومي حسب الوزن</span>
+          </div>
+        </div>
+
+        <!-- Bento Cell 2: Family Platters (الصواني الشاملة) (5 cols) -->
+        <div class="md:col-span-5 glass-card rounded-3xl p-6 sm:p-7 relative overflow-hidden flex flex-col justify-between border-2 border-brand-gold/40 bg-gradient-to-br from-brand-navy via-brand-teal/40 to-brand-deep">
+          <div class="absolute -left-10 -bottom-10 w-44 h-44 bg-brand-gold/15 rounded-full blur-2xl pointer-events-none"></div>
+
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-3 py-1 bg-brand-gold text-brand-navy rounded-full text-xs font-extrabold uppercase">
+                الأكثر طلباً للعائلات
+              </span>
+              <i data-lucide="crown" class="w-6 h-6 text-brand-gold"></i>
+            </div>
+            
+            <h3 class="text-2xl font-black text-white mb-2">صواني المواني الشاملة</h3>
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+              وليمة بحرية ملوكية تجمع تشكيلة من أفخر الأسماك، الجمبري، السبيط، مع الأرز الصيادية والسلطات والطحينة.
+            </p>
+
+            <div class="p-4 rounded-2xl bg-brand-deep/85 border border-brand-gold/30 text-center space-y-1 mb-4">
+              <span class="text-xs text-slate-300 block">صواني متكاملة تبدأ من:</span>
+              <div class="flex items-baseline justify-center gap-2">
+                <span class="text-3xl sm:text-4xl font-black text-brand-gold font-cairo">90 - 150</span>
+                <span class="text-base text-brand-goldLight font-bold">ريال</span>
+              </div>
+              <span class="text-[11px] text-slate-400 block">تناسب من ٢ إلى ٥ أفراد حسب الحجم والمحتويات</span>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-brand-teal/30 border border-brand-wave/30 text-center">
+            <span class="text-xs font-semibold text-brand-goldLight flex items-center justify-center gap-1.5">
+              <i data-lucide="award" class="w-4 h-4 text-brand-gold"></i>
+              تجهيز سريع للعائلات والمناسبات
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Fresh Fish by Weight (يختلف السعر اليومي) -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-wave/20 flex items-center justify-center text-brand-gold border border-brand-wave/40">
+              <i data-lucide="anchor" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="text-xl sm:text-2xl font-black text-white">الأسماك والبحريات الطازجة بالوزن</h3>
+              <p class="text-xs text-slate-400">توزن طازجة وتجهز فوراً حسب رغبتكم (يختلف السعر اليومي)</p>
+            </div>
+          </div>
+          <span class="text-xs font-semibold px-3 py-1 bg-brand-teal/40 rounded-lg text-brand-goldLight border border-brand-wave/30">
+            ١٩ صنفاً بحرياً
+          </span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5" id="fishListContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Value Meals (الوجبات الفردية) with M & L prices -->
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 rounded-xl bg-brand-gold/20 flex items-center justify-center text-brand-gold border border-brand-gold/30">
+            <i data-lucide="utensils" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black text-white">وجبات أركان المواني الفاخرة</h3>
+            <p class="text-xs text-slate-400">جميع الوجبات تشمل: الأرز الصيادية، السلطة الخضراء، الطحينة والخبز الطازج</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="mealsListContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================= PAGE 2: الطواجن والمكرونة والأرز ================= -->
+    <div id="menu-page-2" class="menu-page-section space-y-9">
+      
+      <!-- Tajines Bento Showcase Banner -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+        
+        <!-- French Tajine Featured Bento Card -->
+        <div class="md:col-span-8 glass-card rounded-3xl p-6 sm:p-7 relative overflow-hidden bg-gradient-to-r from-brand-navy via-brand-teal/40 to-brand-deep border-brand-gold/35">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-3">
+            <div>
+              <span class="inline-block px-3 py-1 bg-brand-gold/20 text-brand-gold font-bold text-xs rounded-full border border-brand-gold/40 mb-2">
+                🌟 إبداع شيف المواني الخاص
+              </span>
+              <h3 class="text-2xl sm:text-3xl font-black text-white">طاجن سي فود فرنسي</h3>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="text-center bg-brand-deep/80 px-3.5 py-1.5 rounded-xl border border-brand-wave/30">
+                <span class="text-[10px] text-slate-400 block">حجم L</span>
+                <span class="text-lg font-black text-brand-gold font-cairo">45 <span class="text-[10px] font-normal">ريال</span></span>
+              </div>
+              <div class="text-center bg-brand-deep/80 px-3.5 py-1.5 rounded-xl border border-brand-gold/40">
+                <span class="text-[10px] text-brand-gold block">حجم عائلي XL</span>
+                <span class="text-lg font-black text-brand-gold font-cairo">50 <span class="text-[10px] font-normal">ريال</span></span>
+              </div>
+            </div>
+          </div>
+          <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+            تشكيلة فاخرة من الجمبري، فيليه السمك، والسبيط المطهوة في صوص الكريمة الفرنسية الغنية وجبنة الموزاريلا المذابة بالفرن.
+          </p>
+          <div class="flex items-center gap-4 text-xs text-brand-goldLight pt-2 border-t border-brand-wave/20">
+            <span class="flex items-center gap-1.5"><i data-lucide="sparkle" class="w-3.5 h-3.5"></i> صلصة فرنسية بيضاء</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5"></i> جبنة موزاريلا محمرة</span>
+          </div>
+        </div>
+
+        <!-- Bento Card: Seafood Buried Rice Highlight -->
+        <div class="md:col-span-4 glass-card rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between border-brand-wave/40">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-xs font-bold text-brand-sky bg-brand-sky/10 px-2.5 py-1 rounded-lg">نكهة ساحلية تراثية</span>
+              <span class="text-xl font-black text-brand-gold font-cairo">30 <span class="text-xs font-normal">ريال</span></span>
+            </div>
+            <h4 class="text-xl font-black text-white mb-2">أرز مدفون بحريات</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              طبقات الأرز المعطر بالبهار الساحلي ومحشو بقطع الجمبري والسبيط المتبل على نار هادئة لنكهة مركزة.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-brand-wave/20 flex items-center justify-between text-xs text-slate-400">
+            <span>طبق مميز</span>
+            <span class="text-brand-gold font-bold">حجم كبير</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Tajines Section -->
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center border border-red-500/30">
+            <i data-lucide="flame" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black text-white">طواجن الفرن الفخارية</h3>
+            <p class="text-xs text-slate-400">تطهى في أواني الفخار على حرارة هادئة لامتصاص أعمق النكهات</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="tajinesListContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Pastas Section -->
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-brand-gold flex items-center justify-center border border-brand-gold/30">
+            <i data-lucide="chef-hat" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black text-white">مكرونة المواني بالبحريات</h3>
+            <p class="text-xs text-slate-400">مكرونة إيطالية محضرة بصلصات الشيف الخاصة (حجم M وحجم L)</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="pastasListContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Rice Section with L and XL prices -->
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 rounded-xl bg-brand-wave/20 text-brand-sky flex items-center justify-center border border-brand-wave/40">
+            <i data-lucide="wheat" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black text-white">أطباق الأرز المتنوعة</h3>
+            <p class="text-xs text-slate-400">أرز صيادية مصري، أرز بسمتي فاخر، وأرز محمل بخلطات البحريات (حجم L وحجم XL)</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="riceListContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================= PAGE 3: السندوتشات والشوربات ================= -->
+    <div id="menu-page-3" class="menu-page-section space-y-9">
+      
+      <!-- Soups Bento Header Banner -->
+      <div class="glass-card rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-brand-deep via-brand-navy to-brand-teal/40 border border-brand-wave/30">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="space-y-2 text-center md:text-right">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-gold/15 text-brand-gold rounded-full text-xs font-bold border border-brand-gold/30">
+              <i data-lucide="sparkle" class="w-3.5 h-3.5"></i> شوربات طازجة يومياً
+            </span>
+            <h3 class="text-2xl sm:text-3xl font-black text-white">دفء البحر والنكهات الساحلية المركزة</h3>
+            <p class="text-slate-300 text-xs sm:text-sm max-w-xl">
+              شوربة السي فود الكريمة وشوربة الملوخية بالجمبري الطازج المحضرة بمرق السمك الفاخر والتوابل الساحلية.
+            </p>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="text-center p-3 rounded-2xl bg-brand-navy/90 border border-brand-wave/40">
+              <span class="text-xs text-slate-300 block">شوربة مأكولات بحرية</span>
+              <span class="text-xl font-bold text-brand-gold">30 ريال</span>
+            </div>
+            <div class="text-center p-3 rounded-2xl bg-brand-navy/90 border border-brand-wave/40">
+              <span class="text-xs text-slate-300 block">ملوخية بالجمبري</span>
+              <span class="text-xl font-bold text-brand-gold">20 ريال</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Soups Grid with M & L sizes -->
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center border border-blue-500/30">
+            <i data-lucide="soup" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black text-white">قائمة الشوربات البحرية</h3>
+            <p class="text-xs text-slate-400">مرق طازج غني بالفوائد والأحماض الأمينية والأوميجا 3</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="soupsListContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Sandwiches Section with M & L sizes -->
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 rounded-xl bg-brand-gold/20 text-brand-gold flex items-center justify-center border border-brand-gold/30">
+            <i data-lucide="sandwich" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black text-white">سندوتشات السي فود السريعة</h3>
+            <p class="text-xs text-slate-400">في الخبز الطازج مع صوص الطحينة والجرجير والمخلل الخاص (حجم M وحجم L)</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="sandwichesListContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================= PAGE 4: السلطات والمقبلات والمشروبات ================= -->
+    <div id="menu-page-4" class="menu-page-section space-y-9">
+      
+      <!-- Salads & Appetizers Section -->
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+            <i data-lucide="salad" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black text-white">السلطات والمقبلات الطازجة</h3>
+            <p class="text-xs text-slate-400">المقبلات الشهية التي تكتمل بها مائدة المأكولات البحرية</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4" id="saladsListContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Chilled Beverages Section -->
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center border border-sky-500/30">
+            <i data-lucide="glass-water" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black text-white">المشروبات الباردة والمنعشة</h3>
+            <p class="text-xs text-slate-400">مشروبات غازية منعشة ومياه نقية</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="drinksListContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Restaurant Hospitality Bento Card -->
+      <div class="glass-card rounded-3xl p-6 sm:p-8 border-brand-gold/30 bg-gradient-to-r from-brand-deep via-brand-navy to-brand-teal/40">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+          <div class="flex items-center gap-4 md:col-span-2">
+            <div class="w-14 h-14 rounded-2xl bg-brand-gold/20 flex items-center justify-center text-brand-gold border border-brand-gold/40 flex-shrink-0">
+              <i data-lucide="shield-check" class="w-7 h-7"></i>
+            </div>
+            <div>
+              <h4 class="text-lg font-extrabold text-white mb-1">الجودة والنظافة والطهي الفوري</h4>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                في مطعم <strong class="text-brand-gold">أركان المواني</strong> نضمن لكم أسماكاً وبحريات طازجة يومياً تطهى بالكامل عند الطلب للحفاظ على أعلى درجات المذاق والقيمة الغذائية.
+              </p>
+            </div>
+          </div>
+          <div class="flex flex-col items-center justify-center p-4 rounded-2xl bg-brand-deep/80 border border-brand-wave/30 text-center">
+            <span class="text-xs text-slate-300">أوقات العمل اليومية</span>
+            <span class="text-brand-gold font-black text-sm mt-1">١١:٠٠ صباحاً – ١:٠٠ بعد منتصف الليل</span>
+            <span class="text-[10px] text-slate-400 mt-0.5">أهلاً وسهلاً بكم في أي وقت</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Search Results View (Shown when searching) -->
+    <div id="searchResultsSection" class="hidden space-y-6">
+      <div class="flex items-center gap-3 pb-3 border-b border-brand-wave/30">
+        <i data-lucide="list-filter" class="w-6 h-6 text-brand-gold"></i>
+        <h3 class="text-xl font-bold text-white">الأصناف المطابقة لبحثك</h3>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="searchResultsGrid">
+        <!-- Injected during search -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer Matching Logo Wave Theme -->
+  <footer class="bg-brand-deep border-t border-brand-wave/30 pt-10 pb-8 text-slate-400 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-brand-wave/20">
+        
+        <!-- Brand Info -->
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-8 h-8 rounded-lg bg-brand-gold flex items-center justify-center text-brand-navy font-black text-base">
+              أ
+            </div>
+            <span class="text-lg font-black text-white font-cairo">أركان المواني</span>
+          </div>
+          <p class="leading-relaxed text-slate-400 text-xs mb-3">
+            مطعم مأكولات بحرية فاخر يقدم أرقى النكهات الساحلية بأيدي طهاة محترفين وبأعلى مقاييس الطزاجة والجودة.
+          </p>
+          <div class="flex items-center gap-2 text-brand-gold font-semibold">
+            <i data-lucide="clock" class="w-4 h-4"></i>
+            <span>نستقبلكم يومياً من الساعة ١١:٠٠ صباحاً حتى ١:٠٠ بعد منتصف الليل</span>
+          </div>
+        </div>
+
+        <!-- Cooking Styles Navigation -->
+        <div>
+          <h4 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
+            <i data-lucide="utensils-crossed" class="w-4 h-4 text-brand-gold"></i>
+            طرق طهي الأسماك
+          </h4>
+          <ul class="grid grid-cols-2 gap-2 text-slate-300">
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brand-gold"></span> مشوي على الفحم</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brand-gold"></span> مشوي بالردة</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brand-gold"></span> زيت وليمون</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brand-gold"></span> فرن إسكندراني</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brand-gold"></span> سنجاري مميز</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brand-gold"></span> مقلي بالخلطة</li>
+          </ul>
+        </div>
+
+        <!-- Special Platter Callout -->
+        <div>
+          <h4 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
+            <i data-lucide="sparkles" class="w-4 h-4 text-brand-gold"></i>
+            صواني العائلات والمناسبات
+          </h4>
+          <p class="text-xs text-slate-400 mb-3">
+            تجهيز كامل للولائم والصواني المشكلة الفاخرة التي تبدأ من ٩٠ إلى ١٥٠ ريال لضمان أفضل تجربة مع عائلتك وضيوفك.
+          </p>
+          <div class="p-3 rounded-xl bg-brand-navy/70 border border-brand-wave/30 text-center">
+            <span class="text-brand-gold font-bold text-xs">طازج يومياً • أسعار يومية مناسبة للأسماك</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-slate-400 text-[11px] gap-2">
+        <p>© 2026 مطعم أركان المواني للمأكولات البحرية. جميع الحقوق محفوظة.</p>
+        <p class="text-slate-400">قائمة رقمية للعرض - مستوحاة من هوية الشعار الرسمية والأمواج</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Complete read-only menu dataset extracted from the PDF
+    const menuData = {
+      // 1. Fresh Catch (يختلف السعر اليومي)
+      freshFish: [
+        { name: "بلطي", category: "نهري / بحري طازج", desc: "لحم طري ومميز مشوي بالردة أو مقلي مقرمش" },
+        { name: "بوري", category: "بحري ممتاز", desc: "مثالي لطريقة السنجاري أو مشوي بالردة" },
+        { name: "مكريل", category: "غني بالأوميجا 3", desc: "نكهة دسمة قوية مشوي بالزيت والليمون" },
+        { name: "هامور", category: "سمك القاع الفاخر", desc: "أجود أنواع الأسماك بلحم أبيض متماسك" },
+        { name: "كنعد", category: "لحم أبيض ملكي", desc: "ستيك سمك فاخر مشوي على الفحم أو فرن" },
+        { name: "زبيدي", category: "قوام ناعم وطازج", desc: "سمك بحري ناعم النكهة مقلي أو مشوي" },
+        { name: "سلطان إبراهيم", category: "أحمر فاخر", desc: "سمك أحمر مميز ومقرمش في القلي" },
+        { name: "دنيس", category: "ملك المائدة", desc: "طعم ولا أروع مشوي زيت وليمون أو سنجاري" },
+        { name: "قاروس", category: "سمك فاخر", desc: "لحم شهي وطري يناسب كافة طرق الطبخ" },
+        { name: "سلمون", category: "طازج يومياً", desc: "شريحة ستيك سلمون غنية ومغذية" },
+        { name: "بياض", category: "فيليه ممتاز", desc: "خالي تماماً من الشوك بطعم ساحلي شهي" },
+        { name: "فيليه", category: "خالي من الشوك", desc: "أصابع فيليه مقلية أو مشوية بالتتبيلة" },
+        { name: "حبار", category: "طري ومقرمش", desc: "حلقات حبار طازجة بالخلطة والليمون" },
+        { name: "كليماري", category: "مفرغ ومتبل", desc: "مناسب للطواجن والقلي المقرمش" },
+        { name: "استاكوزا", category: "ثمار البحر الملكية", desc: "تطهى بالجبن والكريمة أو مشوية بالفرن" },
+        { name: "كابوريا", category: "نكهة بحرية أصيلة", desc: "مسلوقة بالتوابل أو مشوية على الفحم" },
+        { name: "جمبري كبير", category: "جامبو طازج", desc: "للشوي على الفحم، القلي أو الطواجن" },
+        { name: "جمبري وسط", category: "طازج ولذيذ", desc: "ممتاز للأرز، الطواجن والشوي" },
+        { name: "بلح البحر", category: "محار طازج", desc: "مطهو في المرق والليمون والثوم" }
+      ],
+
+      // 2. Value Meals (الوجبات)
+      meals: [
+        { name: "وجبة البلطي", prices: { L: 30, M: 25 }, desc: "سمك بلطي طازج مع أرز صيادية، سلطة خضار، طحينة وعيش" },
+        { name: "وجبة البوري", prices: { L: 45, M: 40 }, desc: "سمك بوري سنجاري أو مشوي ردة مع الأرز والسلطات" },
+        { name: "وجبة الماكريل", prices: { L: 45, M: 40 }, desc: "سمك ماكريل مشوي غني بالزيوت الصحية مع الأرز والعيش" },
+        { name: "وجبة السلمون", prices: { single: 50 }, desc: "قطعة ستيك سلمون مشوية مع صوص الليمون، أرز وسلطات" },
+        { name: "وجبة الكنعد", prices: { single: 50 }, desc: "شريحة كنعد فاخرة متبلة ومحمرة بإتقان مع كامل ملحقات الوجبة" },
+        { name: "وجبة الشعور", prices: { single: 50 }, desc: "سمك شعور طازج ولحم أبيض متماسك مع أرز المواني وسلطات" },
+        { name: "وجبة الفيليه", prices: { single: 35 }, desc: "أصابع فيليه سمك مقرمشة متبلة مع الأرز والطحينة والعيش" },
+        { name: "وجبة الجمبري", prices: { single: 35 }, desc: "جمبري ذهبي مقلي أو مشوي يقدم مع الأرز والصلصة والسلطة" },
+        { name: "وجبة الحبار", prices: { single: 35 }, desc: "حلقات حبار مقرمشة مع الخلطة الخاصة والصلصات الشهية" },
+        { name: "وجبة البحريات المشكل", prices: { single: 40 }, desc: "تشكيلة متكاملة من الجمبري، السبيط والفيليه مع الأرز" }
+      ],
+
+      // 3. Tajines (الطواجن)
+      tajines: [
+        { name: "طاجن سي فود مشكل أحمر", prices: { L: 40 }, sauce: "صلصة حمراء", desc: "جمبري وسبيط وفيليه بصلصة الطماطم والأعشاب بالفرن الفخاري" },
+        { name: "طاجن جمبري أحمر", prices: { L: 40 }, sauce: "صلصة حمراء", desc: "حبات الجمبري مطهوة بالثوم وصلصة الطماطم والفلفل الحار" },
+        { name: "طاجن سبيط أحمر", prices: { L: 40 }, sauce: "صلصة حمراء", desc: "سبيط طري متبل بالكمون وصلصة الطماطم الشرقية المركزة" },
+        { name: "طاجن سبيط أبيض", prices: { L: 40 }, sauce: "كريمة بيضاء", desc: "سبيط مطهو بصلصة الكريمة الغنية والجبن المذاب بالفرن" },
+        { name: "طاجن فرنسي", prices: { XL: 50, L: 45 }, sauce: "ميكس أجبان وكريمة", desc: "سي فود فاخر مع الكريمة الفرنسية وجبن الموزاريلا المحمر" }
+      ],
+
+      // 4. Pastas (المكرونة)
+      pastas: [
+        { name: "مكرونة سي فود أحمر", prices: { L: 35, M: 30 }, desc: "باستا إيطالية بثمار البحر بصلصة الطماطم بالريحان والثوم" },
+        { name: "مكرونة سي فود أبيض", prices: { L: 40, M: 35 }, desc: "باستا بصلصة الكريمة وثمار البحر وجبنة البارميزان" },
+        { name: "مكرونة جمبري فقط", prices: { single: 35 }, desc: "باستا شهية محملة بحبات الجمبري الطازج وصوص المواني" }
+      ],
+
+      // 5. Rice (الأرز)
+      rice: [
+        { name: "أرز مصري صيادية", prices: { XL: 10, L: 5 }, desc: "أرز البصل المحمر التقليدي بنكهة البهار والكمون الساحلي" },
+        { name: "أرز بسمتي", prices: { XL: 10, L: 5 }, desc: "أرز حبة طويلة معتدل النكهة مع بهار الزعفران الهادئ" },
+        { name: "أرز أبيض", prices: { XL: 10, L: 5 }, desc: "أرز ناصع وخفيف ممتاز بجانب الطواجن والصلصات" },
+        { name: "أرز سيفود مشكل", prices: { XL: 30, L: 25 }, desc: "أرز صيادية ممزوج بالجمبري والسبيط والبهارات الخاصة" },
+        { name: "أرز فيليه", prices: { single: 20 }, desc: "أرز صيادية شهي مغطى بقطع الفيليه المقرمش المحمر" },
+        { name: "أرز سبيط", prices: { single: 20 }, desc: "أرز مطبوخ مع قطع السبيط المتبلة بالثوم والليمون" },
+        { name: "أرز مدفون بحريات", prices: { single: 30 }, desc: "مدفون البحريات الفاخر بطبقات الأرز المعطر ومكس الجمبري" }
+      ],
+
+      // 6. Sandwiches (السندوتشات)
+      sandwiches: [
+        { name: "سندوتش جمبري", prices: { L: 20, M: 15 }, desc: "جمبري مقلي مقرمش، طحينة سمسم، جرجير وخضار طازج" },
+        { name: "سندوتش السبيط", prices: { L: 20, M: 15 }, desc: "حلقات سبيط مقلية متبلة بالليمون والكمون وصوص الطحينة" },
+        { name: "سندوتش الفيليه", prices: { L: 20, M: 15 }, desc: "فيليه سمك طري مقرمش مع الخس والصوص الساحلي" },
+        { name: "سندوتش مشكل", prices: { L: 25, M: 20 }, desc: "مزيج فاخر من الجمبري والسبيط والفيليه في ساندوتش واحد" }
+      ],
+
+      // 7. Soups (الشوربة)
+      soups: [
+        { name: "شوربة السي فود", prices: { L: 25, M: 20 }, desc: "شوربة كريمة غنية أو مرق أبيض بتشكيلة ثمار البحر الطازجة" },
+        { name: "شوربة الجمبري", prices: { L: 25, M: 20 }, desc: "حبات الجمبري مع مرق غني بالبهارات والأعشاب البحرية" },
+        { name: "شوربة المأكولات البحرية", prices: { single: 30 }, desc: "الشوربة الملكية الفاخرة المحملة بأجود خيرات البحر" },
+        { name: "شوربة بلح البحر", prices: { single: 20 }, desc: "محار بلح البحر المطهو في مرق الليمون والثوم والأعشاب" },
+        { name: "شوربة الجمبري سادة", prices: { single: 7 }, desc: "مرق الجمبري الصافي والمنعش لفتح الشهية" },
+        { name: "شوربة الملوخية بالجمبري", prices: { single: 20 }, desc: "الملوخية الخضراء الساحلية بطشة الثوم والكزبرة والجمبري" }
+      ],
+
+      // 8. Salads (السلطات والمقبلات)
+      salads: [
+        { name: "سلطة خضار", price: 5, desc: "خضار طازج، طماطم وخيار مع زيت الزيتون والليمون" },
+        { name: "بابا غنوج", price: 5, desc: "باذنجان مشوي ومهروس مع الطحينة وزيت الزيتون" },
+        { name: "مسقعة", price: 5, desc: "باذنجان وصلصة طماطم بالبهار الشرقي الخاص" },
+        { name: "طحينة", price: 3, desc: "طحينة سمسم فاخرة بخلطة أركان المواني المميزة" },
+        { name: "حمرة", price: 3, desc: "صلصة حمرة سبايسي شهية لعشاق المذاق الحار" }
+      ],
+
+      // 9. Drinks (المشروبات)
+      drinks: [
+        { name: "ماء", price: 1, size: "330 مل", icon: "droplet" },
+        { name: "بيبسي", price: 3, size: "كانز بارد", icon: "cup-soda" },
+        { name: "حمضيات", price: 3, size: "كانز بارد", icon: "citrus" },
+        { name: "شويبس", price: 5, size: "كانز متنوع", icon: "sparkles" }
+      ]
+    };
+
+    let currentPage = 1;
+
+    // Switch between pages 1 to 4
+    function goToPage(pageNum) {
+      if (pageNum < 1 || pageNum > 4) return;
+      currentPage = pageNum;
+
+      // Hide search view if open
+      document.getElementById('searchResultsSection').classList.add('hidden');
+      document.getElementById('searchFeedbackBox').classList.add('hidden');
+
+      for (let i = 1; i <= 4; i++) {
+        const pageEl = document.getElementById(`menu-page-${i}`);
+        const tabEl = document.getElementById(`tab-${i}`);
+        if (pageEl) {
+          pageEl.classList.toggle('active-page', i === pageNum);
+        }
+        if (tabEl) {
+          tabEl.classList.toggle('active', i === pageNum);
+        }
+      }
+
+      document.getElementById('currentPageIndicator').textContent = pageNum;
+      window.scrollTo({ top: 160, behavior: 'smooth' });
+    }
+
+    function navigatePage(direction) {
+      let target = currentPage + direction;
+      if (target > 4) target = 1;
+      if (target < 1) target = 4;
+      goToPage(target);
+    }
+
+    function renderAllMenuSections() {
+      // 1. Fresh Fish
+      const fishBox = document.getElementById('fishListContainer');
+      if (fishBox) {
+        fishBox.innerHTML = menuData.freshFish.map(fish => `
+          <div class="glass-card rounded-2xl p-4 flex flex-col justify-between items-center text-center">
+            <div class="w-12 h-12 rounded-xl bg-brand-wave/20 flex items-center justify-center text-brand-gold mb-2 border border-brand-wave/30">
+              <i data-lucide="fish" class="w-6 h-6 stroke-[1.8]"></i>
+            </div>
+            <div>
+              <h4 class="font-extrabold text-white text-base">${fish.name}</h4>
+              <span class="text-[11px] text-brand-sky font-medium block mt-0.5">${fish.category}</span>
+              <p class="text-[10px] text-slate-300 mt-1 line-clamp-2">${fish.desc}</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-brand-wave/20 w-full flex items-center justify-between text-[11px]">
+              <span class="text-slate-400">السعر:</span>
+              <span class="px-2 py-0.5 rounded bg-brand-navy text-brand-goldLight font-bold border border-brand-gold/30">
+                حسب السعر اليومي
+              </span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 2. Meals
+      const mealsBox = document.getElementById('mealsListContainer');
+      if (mealsBox) {
+        mealsBox.innerHTML = menuData.meals.map(meal => {
+          const hasSizes = meal.prices.L && meal.prices.M;
+          return `
+            <div class="glass-card rounded-2xl p-5 flex flex-col justify-between">
+              <div>
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <h4 class="text-base sm:text-lg font-black text-white">${meal.name}</h4>
+                  <div class="text-left font-cairo">
+                    ${hasSizes ? `
+                      <div class="flex items-center gap-1.5">
+                        <span class="px-2 py-0.5 rounded-lg bg-brand-deep text-xs font-bold text-slate-200 border border-brand-wave/30">
+                          M: <strong class="text-brand-gold">${meal.prices.M}</strong> ر.س
+                        </span>
+                        <span class="px-2 py-0.5 rounded-lg bg-brand-deep text-xs font-bold text-brand-gold border border-brand-gold/40">
+                          L: <strong class="text-brand-gold">${meal.prices.L}</strong> ر.س
+                        </span>
+                      </div>
+                    ` : `
+                      <span class="px-2.5 py-1 rounded-lg bg-brand-deep border border-brand-gold/40 text-base font-black text-brand-gold">
+                        ${meal.prices.single} <span class="text-xs font-normal text-slate-300">ريال</span>
+                      </span>
+                    `}
+                  </div>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed mb-3">${meal.desc}</p>
+              </div>
+              <div class="pt-2 border-t border-brand-wave/20 flex items-center justify-between text-[11px] text-slate-400">
+                <span class="flex items-center gap-1"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-gold"></i> وجبة متكاملة</span>
+                <span class="text-brand-goldLight">أرز + سلطات + عيش</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // 3. Tajines
+      const tajinesBox = document.getElementById('tajinesListContainer');
+      if (tajinesBox) {
+        tajinesBox.innerHTML = menuData.tajines.map(t => {
+          const isMulti = t.prices.XL && t.prices.L;
+          return `
+            <div class="glass-card rounded-2xl p-5 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-brand-teal text-brand-gold border border-brand-wave/40">${t.sauce}</span>
+                  <div class="font-cairo">
+                    ${isMulti ? `
+                      <span class="text-xs font-bold text-brand-gold">L: ${t.prices.L} | XL: ${t.prices.XL} ر.س</span>
+                    ` : `
+                      <span class="text-base font-black text-brand-gold">${t.prices.L} <span class="text-xs font-normal">ريال</span></span>
+                    `}
+                  </div>
+                </div>
+                <h4 class="text-base font-extrabold text-white mb-1.5">${t.name}</h4>
+                <p class="text-xs text-slate-300 leading-relaxed mb-3">${t.desc}</p>
+              </div>
+              <div class="pt-2 border-t border-brand-wave/20 text-[11px] text-slate-400 flex justify-between">
+                <span>فخار بالفرن</span>
+                <span class="text-brand-gold">ساخن وطازج</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // 4. Pastas
+      const pastasBox = document.getElementById('pastasListContainer');
+      if (pastasBox) {
+        pastasBox.innerHTML = menuData.pastas.map(p => {
+          const hasSizes = p.prices.L && p.prices.M;
+          return `
+            <div class="glass-card rounded-2xl p-5 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <h4 class="text-base font-extrabold text-white">${p.name}</h4>
+                  <div class="font-cairo">
+                    ${hasSizes ? `
+                      <span class="text-xs font-bold text-brand-gold">M: ${p.prices.M} ر.س | L: ${p.prices.L} ر.س</span>
+                    ` : `
+                      <span class="text-base font-bold text-brand-gold">${p.prices.single} ريال</span>
+                    `}
+                  </div>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed mb-3">${p.desc}</p>
+              </div>
+              <div class="pt-2 border-t border-brand-wave/20 flex items-center justify-between text-[11px] text-slate-400">
+                <span>باستا إيطالية</span>
+                <span class="text-brand-goldLight">بحريات طازجة</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // 5. Rice
+      const riceBox = document.getElementById('riceListContainer');
+      if (riceBox) {
+        riceBox.innerHTML = menuData.rice.map(r => {
+          const hasXL = r.prices.XL && r.prices.L;
+          return `
+            <div class="glass-card rounded-2xl p-4 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <h4 class="text-sm font-black text-white">${r.name}</h4>
+                  <span class="text-brand-gold font-bold text-xs font-cairo">
+                    ${hasXL ? `L: ${r.prices.L} | XL: ${r.prices.XL} ر.س` : `${r.prices.single} ريال`}
+                  </span>
+                </div>
+                <p class="text-[11px] text-slate-300 mb-3">${r.desc}</p>
+              </div>
+              <div class="pt-2 border-t border-brand-wave/20 flex items-center justify-between text-[10px] text-slate-400">
+                <span>تتبيلة المواني</span>
+                <span class="text-brand-sky font-semibold">${hasXL ? 'حجم L / XL' : 'طبق فردي كبير'}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // 6. Soups
+      const soupsBox = document.getElementById('soupsListContainer');
+      if (soupsBox) {
+        soupsBox.innerHTML = menuData.soups.map(s => {
+          const hasSizes = s.prices.L && s.prices.M;
+          return `
+            <div class="glass-card rounded-2xl p-5 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <h4 class="text-base font-extrabold text-white">${s.name}</h4>
+                  <div class="font-cairo">
+                    ${hasSizes ? `
+                      <span class="text-xs font-bold text-brand-gold">M: ${s.prices.M} ر.س | L: ${s.prices.L} ر.س</span>
+                    ` : `
+                      <span class="text-base font-bold text-brand-gold">${s.prices.single} ريال</span>
+                    `}
+                  </div>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed mb-3">${s.desc}</p>
+              </div>
+              <div class="pt-2 border-t border-brand-wave/20 flex items-center justify-between text-[11px] text-slate-400">
+                <span>مرق بحري غني</span>
+                <span class="text-brand-goldLight">طازج وساخن</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // 7. Sandwiches
+      const sandwichesBox = document.getElementById('sandwichesListContainer');
+      if (sandwichesBox) {
+        sandwichesBox.innerHTML = menuData.sandwiches.map(sw => `
+          <div class="glass-card rounded-2xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h4 class="text-sm font-extrabold text-white">${sw.name}</h4>
+                <div class="flex gap-1.5 font-cairo">
+                  <span class="px-2 py-0.5 rounded bg-brand-deep text-slate-200 text-xs font-bold border border-brand-wave/30">M: ${sw.prices.M}</span>
+                  <span class="px-2 py-0.5 rounded bg-brand-deep text-brand-gold text-xs font-bold border border-brand-gold/30">L: ${sw.prices.L}</span>
+                </div>
+              </div>
+              <p class="text-[11px] text-slate-300 leading-relaxed mb-3">${sw.desc}</p>
+            </div>
+            <div class="pt-2 border-t border-brand-wave/20 text-[10px] text-slate-400 flex justify-between">
+              <span>بالطحينة والجرجير</span>
+              <span class="text-brand-gold">خبز طازج</span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 8. Salads
+      const saladsBox = document.getElementById('saladsListContainer');
+      if (saladsBox) {
+        saladsBox.innerHTML = menuData.salads.map(item => `
+          <div class="glass-card rounded-2xl p-4 flex flex-col justify-between text-center">
+            <div>
+              <span class="text-2xl mb-1 block">🥗</span>
+              <h4 class="text-sm font-black text-white">${item.name}</h4>
+              <p class="text-[11px] text-slate-400 mt-1">${item.desc}</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-brand-wave/20 flex items-center justify-center">
+              <span class="text-brand-gold font-bold text-sm font-cairo">${item.price} ريال</span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 9. Drinks
+      const drinksBox = document.getElementById('drinksListContainer');
+      if (drinksBox) {
+        drinksBox.innerHTML = menuData.drinks.map(d => `
+          <div class="glass-card rounded-2xl p-4 flex flex-col justify-between items-center text-center">
+            <div class="w-10 h-10 rounded-xl bg-brand-wave/20 flex items-center justify-center text-brand-sky mb-2 border border-brand-wave/30">
+              <i data-lucide="${d.icon}" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white">${d.name}</h4>
+              <span class="text-[10px] text-slate-400">${d.size}</span>
+            </div>
+            <div class="mt-3 w-full pt-2 border-t border-brand-wave/20 text-center">
+              <span class="text-brand-gold font-bold text-sm font-cairo">${d.price} ريال</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function handleLiveSearch(query) {
+      const term = query.trim().toLowerCase();
+      const clearBtn = document.getElementById('clearSearchBtn');
+      const searchBox = document.getElementById('searchResultsSection');
+      const feedbackBox = document.getElementById('searchFeedbackBox');
+      const queryLabel = document.getElementById('searchQueryLabel');
+      const resultsGrid = document.getElementById('searchResultsGrid');
+
+      if (!term) {
+        resetSearch();
+        return;
+      }
+
+      clearBtn.classList.remove('hidden');
+      feedbackBox.classList.remove('hidden');
+      queryLabel.textContent = `"${term}"`;
+
+      // Hide all standard pages
+      for (let i = 1; i <= 4; i++) {
+        const p = document.getElementById(`menu-page-${i}`);
+        if (p) p.classList.remove('active-page');
+      }
+
+      // Show search container
+      searchBox.classList.remove('hidden');
+
+      // Aggregate all items
+      let matches = [];
+
+      // Fish
+      menuData.freshFish.forEach(f => {
+        if (f.name.includes(term) || f.category.includes(term) || f.desc.includes(term)) {
+          matches.push({ title: f.name, category: `أسماك طازجة (${f.category})`, price: 'حسب السعر اليومي بالوزن', desc: f.desc, page: 1 });
+        }
+      });
+
+      // Meals
+      menuData.meals.forEach(m => {
+        if (m.name.includes(term) || m.desc.includes(term)) {
+          const pr = m.prices.single ? `${m.prices.single} ريال` : `M: ${m.prices.M} ر.س | L: ${m.prices.L} ر.س`;
+          matches.push({ title: m.name, category: 'وجبات بحرية فاخرة', price: pr, desc: m.desc, page: 1 });
+        }
+      });
+
+      // Tajines
+      menuData.tajines.forEach(t => {
+        if (t.name.includes(term) || t.desc.includes(term) || t.sauce.includes(term)) {
+          const pr = t.prices.XL ? `L: ${t.prices.L} | XL: ${t.prices.XL} ر.س` : `${t.prices.L} ريال`;
+          matches.push({ title: t.name, category: `طواجن (${t.sauce})`, price: pr, desc: t.desc, page: 2 });
+        }
+      });
+
+      // Pastas
+      menuData.pastas.forEach(p => {
+        if (p.name.includes(term) || p.desc.includes(term)) {
+          const pr = p.prices.single ? `${p.prices.single} ريال` : `M: ${p.prices.M} | L: ${p.prices.L} ر.س`;
+          matches.push({ title: p.name, category: 'مكرونة بالبحريات', price: pr, desc: p.desc, page: 2 });
+        }
+      });
+
+      // Rice
+      menuData.rice.forEach(r => {
+        if (r.name.includes(term) || r.desc.includes(term)) {
+          const pr = r.prices.XL ? `L: ${r.prices.L} | XL: ${r.prices.XL} ر.س` : `${r.prices.single} ريال`;
+          matches.push({ title: r.name, category: 'أطباق الأرز', price: pr, desc: r.desc, page: 2 });
+        }
+      });
+
+      // Soups
+      menuData.soups.forEach(s => {
+        if (s.name.includes(term) || s.desc.includes(term)) {
+          const pr = s.prices.single ? `${s.prices.single} ريال` : `M: ${s.prices.M} | L: ${s.prices.L} ر.س`;
+          matches.push({ title: s.name, category: 'شوربات بحرية', price: pr, desc: s.desc, page: 3 });
+        }
+      });
+
+      // Sandwiches
+      menuData.sandwiches.forEach(sw => {
+        if (sw.name.includes(term) || sw.desc.includes(term)) {
+          matches.push({ title: sw.name, category: 'سندوتشات بحرية', price: `M: ${sw.prices.M} | L: ${sw.prices.L} ر.س`, desc: sw.desc, page: 3 });
+        }
+      });
+
+      // Salads
+      menuData.salads.forEach(sd => {
+        if (sd.name.includes(term) || sd.desc.includes(term)) {
+          matches.push({ title: sd.name, category: 'سلطات ومقبلات', price: `${sd.price} ريال`, desc: sd.desc, page: 4 });
+        }
+      });
+
+      // Drinks
+      menuData.drinks.forEach(d => {
+        if (d.name.includes(term)) {
+          matches.push({ title: d.name, category: 'مشروبات', price: `${d.price} ريال`, desc: d.size, page: 4 });
+        }
+      });
+
+      if (matches.length === 0) {
+        resultsGrid.innerHTML = `
+          <div class="col-span-full text-center py-12 text-slate-400 glass-card rounded-2xl">
+            <i data-lucide="help-circle" class="w-10 h-10 mx-auto mb-2 text-brand-gold opacity-60"></i>
+            <p class="font-bold">عذراً، لم نجد أصنافاً تطابق "${term}"</p>
+            <p class="text-xs mt-1 text-slate-400">جرب كتابة: جمبري، بوري، طاجن، مكرونة، شوربة، أو أرز</p>
+          </div>
+        `;
+      } else {
+        resultsGrid.innerHTML = matches.map(m => `
+          <div class="glass-card rounded-2xl p-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-brand-deep text-brand-sky border border-brand-wave/30">
+                  ${m.category}
+                </span>
+                <span class="text-xs font-bold text-brand-gold font-cairo">${m.price}</span>
+              </div>
+              <h4 class="text-base font-black text-white mb-1">${m.title}</h4>
+              <p class="text-xs text-slate-300 leading-relaxed mb-3">${m.desc}</p>
+            </div>
+            <div class="pt-2 border-t border-brand-wave/20 flex items-center justify-between text-[11px]">
+              <span class="text-slate-400">موجود في صفحة ${m.page}</span>
+              <button onclick="goToPage(${m.page})" class="text-brand-gold hover:underline font-bold flex items-center gap-1">
+                <span>فتح الصفحة</span>
+                <i data-lucide="arrow-left" class="w-3 h-3"></i>
+              </button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      lucide.createIcons();
+    }
+
+    function resetSearch() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('clearSearchBtn').classList.add('hidden');
+      document.getElementById('searchResultsSection').classList.add('hidden');
+      document.getElementById('searchFeedbackBox').classList.add('hidden');
+      goToPage(currentPage);
+    }
+
+    // Initialize all components on window load
+    window.onload = function() {
+      renderAllMenuSections();
+      lucide.createIcons();
+    };
+  </script>
+</body>
+</html>
